@@ -12,13 +12,16 @@ window.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const audioElement = document.getElementById('audio-element');
 
-    // Setup streaming connection using direct EveryQuran API mirror system
+    // Fix: Using the official Quran.com CORS-allowed CDN link format
     function loadAndSetupAudio(element) {
         const surahName = element.innerText;
-        const surahId = element.getAttribute('data-id');
+        const surahId = element.getAttribute('data-id'); // Keeps "001", "002", etc.
         
-        // Formats to clear standard server cross-origin restrictions completely
-        const audioUrl = `https://everyquran.com/recitations/Al-Minshawi/${surahId}.mp3`;
+        // Clean ID integer to remove leading zeros for the target server requirements
+        const cleanId = parseInt(surahId, 10);
+        
+        // Official Quran.com streaming CDN for Minshawi (Murattal)
+        const audioUrl = `https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshawi/murattal/${cleanId}.mp3`;
         
         currentViewState = "player";
         menuView.classList.add('hidden');
