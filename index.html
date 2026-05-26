@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quran OS</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="pixil-frame-0.png">
+    <link rel="apple-touch-icon" href="pixil-frame-0.png">
+</head>
+
+<body>
+    <div class="main">
+        <p class="heading">Quran</p>
+        <p style="font-size: 16px; text-align: center; text-transform: uppercase; margin-top: -5px; opacity: 0.8;">
+            © 2026 BY OMAR GAWISH. ALL RIGHTS RESERVED.
+        </p>
+        <hr>
+
+        <div id="menu-view" class="view">
+            <div class="surah-container">
+                <div class="surah">
+                    <p class="menu-item selected" data-id="001">1: al fatiha</p>
+                    <p class="menu-item" data-id="002">2: al baqarah</p>
+                    <p class="menu-item" data-id="003">3: al imran</p>
+                    <p class="menu-item" data-id="004">4: an nisa</p>
+                    <p class="menu-item" data-id="005">5: al ma'idah</p>
+                    <p class="menu-item" data-id="006">6: al an'am</p>
+                    <p class="menu-item" data-id="007">7: al a'raf</p>
+                    <p class="menu-item" data-id="008">8: al anfal</p>
+                    <p class="menu-item" data-id="009">9: at taubah</p>
+                    <p class="menu-item" data-id="010">10: yunus</p>
+                    <p class="menu-item" data-id="011">11: hud</p>
+                    <p class="menu-item" data-id="012">12: yusuf</p>
+                    <p class="menu-item" data-id="013">13: ar ra'd</p>
+                    <p class="menu-item" data-id="014">14: ibrahim</p>
+                    <p class="menu-item" data-id="015">15: al hijr</p>
+                    <p class="menu-item" data-id="016">16: an nahl</p>
+                    <p class="menu-item" data-id="017">17: al isra</p>
+                    <p class="menu-item" data-id="018">18: al kahf</p>
+                    <p class="menu-item" data-id="019">19: maryam</p>
+                    <p class="menu-item" data-id="020">20: ta ha</p>
+                    <p class="menu-item" data-id="021">21: al anbiya</p>
+                    <p class="menu-item" data-id="022">22: al hajj</p>
+                    <p class="menu-item" data-id="023">23: al mu'minun</p>
+                    <p class="menu-item" data-id="024">24: an nur</p>
+                    <p class="menu-item" data-id="025">25: al furqan</p>
+                    <p class="menu-item" data-id="026">26: ash shu'ara</p>
+                    <p class="menu-item" data-id="027">27: an naml</p>
+                    <p class="menu-item" data-id="028">28: al qasas</p>
+                    <p class="menu-item" data-id="029">29: al 'ankabut</p>
+                    <p class="menu-item" data-id="030">30: ar rum</p>
+                    <p class="menu-item" data-id="031">31: luqman</p>
+                    <p class="menu-item" data-id="032">32: as sajdah</p>
+                    <p class="menu-item" data-id="033">33: al ahzab</p>
+                    <p class="menu-item" data-id="034">34: saba</p>
+                    <p class="menu-item" data-id="035">35: fatir</p>
+                    <p class="menu-item" data-id="036">36: ya sin</p>
+                    <p class="menu-item" data-id="037">37: as saffat</p>
+                    <p class="menu-item" data-id="038">38: sad</p>
+                    <p class="menu-item" data-id="039">39: az zumar</p>
+                    <p class="menu-item" data-id="040">40: ghafir</p>
+                    <p class="menu-item" data-id="041">41: fussilat</p>
+                    <p class="menu-item" data-id="042">42: ash shura</p>
+                    <p class="menu-item" data-id="043">43: az zukhruf</p>
+                    <p class="menu-item" data-id="044">44: ad dukhan</p>
+                    <p class="menu-item" data-id="045">45: al jathiyah</p>
+                    <p class="menu-item" data-id="046">46: al ahqaf</p>
+                    <p class="menu-item" data-id="047">47: muhammad</p>
+                    <p class="menu-item" data-id="048">48: al fath</p>
+                    <p class="menu-item" data-id="049">49: al hujurat</p>
+                    <p class="menu-item" data-id="050">50: qaf</p>
+                    <p class="menu-item" data-id="051">51: adh dhariyat</p>
+                    <p class="menu-item" data-id="052">52: at tur</p>
+                    <p class="menu-item" data-id="053">53: an najm</p>
+                    <p class="menu-item" data-id="054">54: al qamar</p>
+                    <p class="menu-item" data-id="055">55: ar rahman</p>
+                    <p class="menu-item" data-id="056">56: al waqi'ah</p>
+                    <p class="menu-item" data-id="057">57: al hadid</p>
+                    <p class="menu-item" data-id="058">58: al mujadilah</p>
+                    <p class="menu-item" data-id="059">59: al hashr</p>
+                    <p class="menu-item" data-id="060">60: al mumtahanah</p>
+                    <p class="menu-item" data-id="061">61: as saff</p>
+                    <p class="menu-item" data-id="062">62: al jumu'ah</p>
+                    <p class="menu-item" data-id="063">63: al munafiqun</p>
+                    <p class="menu-item" data-id="064">64: at taghabun</p>
+                    <p class="menu-item" data-id="065">65: at talaq</p>
+                    <p class="menu-item" data-id="066">66: at tahrim</p>
+                    <p class="menu-item" data-id="067">67: al mulk</p>
+                    <p class="menu-item" data-id="068">68: al qalam</p>
+                    <p class="menu-item" data-id="069">69: al haqqah</p>
+                    <p class="menu-item" data-id="070">70: al ma'arij</p>
+                    <p class="menu-item" data-id="071">71: nuh</p>
+                    <p class="menu-item" data-id="072">72: al jinn</p>
+                    <p class="menu-item" data-id="073">73: al muzzammil</p>
+                    <p class="menu-item" data-id="074">74: al muddaththir</p>
+                    <p class="menu-item" data-id="075">75: al qiyamah</p>
+                    <p class="menu-item" data-id="076">76: al insan</p>
+                    <p class="menu-item" data-id="077">77: al mursalat</p>
+                    <p class="menu-item" data-id="078">78: an naba</p>
+                    <p class="menu-item" data-id="079">79: an nazi'at</p>
+                    <p class="menu-item" data-id="080">80: 'abasa</p>
+                    <p class="menu-item" data-id="081">81: at takwir</p>
+                    <p class="menu-item" data-id="082">82: al infitar</p>
+                    <p class="menu-item" data-id="083">83: al mutaffifin</p>
+                    <p class="menu-item" data-id="084">84: al inshiqaq</p>
+                    <p class="menu-item" data-id="085">85: al buruj</p>
+                    <p class="menu-item" data-id="086">86: at tariq</p>
+                    <p class="menu-item" data-id="087">87: al a'la</p>
+                    <p class="menu-item" data-id="088">88: al ghashiyah</p>
+                    <p class="menu-item" data-id="089">89: al fajr</p>
+                    <p class="menu-item" data-id="090">90: al balad</p>
+                    <p class="menu-item" data-id="091">91: ash shams</p>
+                    <p class="menu-item" data-id="092">92: al layl</p>
+                    <p class="menu-item" data-id="093">93: ad duha</p>
+                    <p class="menu-item" data-id="094">94: ash sharh</p>
+                    <p class="menu-item" data-id="095">95: at tin</p>
+                    <p class="menu-item" data-id="096">96: al 'alaq</p>
+                    <p class="menu-item" data-id="097">97: al qadr</p>
+                    <p class="menu-item" data-id="098">98: al bayyinah</p>
+                    <p class="menu-item" data-id="099">99: az zalzalah</p>
+                    <p class="menu-item" data-id="100">100: al 'adiyat</p>
+                    <p class="menu-item" data-id="101">101: al qari'ah</p>
+                    <p class="menu-item" data-id="102">102: at takathur</p>
+                    <p class="menu-item" data-id="103">103: al 'asr</p>
+                    <p class="menu-item" data-id="104">104: al humazah</p>
+                    <p class="menu-item" data-id="105">105: al fil</p>
+                    <p class="menu-item" data-id="106">106: quraysh</p>
+                    <p class="menu-item" data-id="107">107: al ma'un</p>
+                    <p class="menu-item" data-id="108">108: al kawthar</p>
+                    <p class="menu-item" data-id="109">109: al kafirun</p>
+                    <p class="menu-item" data-id="110">110: an nasr</p>
+                    <p class="menu-item" data-id="111">111: al masad</p>
+                    <p class="menu-item" data-id="112">112: al ikhlas</p>
+                    <p class="menu-item" data-id="113">113: al falaq</p>
+                    <p class="menu-item" data-id="114">114: an nas</p>
+                </div>
+            </div>
+            <div class="footer-hint">Tap Surah to Play • [↑/↓] Keys</div>
+        </div>
+
+        <div id="player-view" class="view hidden">
+            <div class="player-screen">
+                <h2 id="playing-title">Surah Name</h2>
+                <div id="play-btn" class="selected-btn">[PLAY]</div>
+                <div id="back-btn" class="control-btn">[BACK TO MENU]</div>
+                <audio id="audio-element" preload="auto"></audio>
+            </div>
+            <div class="footer-hint">Tap controls above • [ENTER] / [ESC] Keys</div>
+        </div>
+        <p>by Omar Gawish</p>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
