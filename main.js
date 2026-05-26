@@ -12,38 +12,54 @@ window.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const audioElement = document.getElementById('audio-element');
 
-    // Fix: Using the official Quran.com CORS-allowed CDN link format
+    // CORS-Bypassing API Handler
     function loadAndSetupAudio(element) {
         const surahName = element.innerText;
-        const surahId = element.getAttribute('data-id'); // Keeps "001", "002", etc.
-        
-        // Clean ID integer to remove leading zeros for the target server requirements
+        const surahId = element.getAttribute('data-id'); // E.g., "001", "003"
         const cleanId = parseInt(surahId, 10);
-        
-        // Official Quran.com streaming CDN for Minshawi (Murattal)
-        const audioUrl = `https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshawi/murattal/${cleanId}.mp3`;
         
         currentViewState = "player";
         menuView.classList.add('hidden');
         playerView.classList.remove('hidden');
         
         playingTitle.innerText = surahName;
-        playBtn.innerText = "[PLAY]"; 
-        
-        audioElement.src = audioUrl;
-        audioElement.load();
+        playBtn.innerText = "[LOADING]"; 
+
+        // Fetching the official open-source audio streaming link directly from Quran.com API
+        // Reciter ID 7 is Sheikh Minshawi (Murattal)
+        const apiUrl = `https://api.quran.com/api/v4/chapter_recitations/7/${cleanId}`;
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) throw new Error("API Network issue");
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.audio_file && data.audio_file.audio_url) {
+                    audioElement.src = data.audio_file.audio_url;
+                    audioElement.load();
+                    playBtn.innerText = "[PLAY]";
+                } else {
+                    throw new Error("Invalid API data format");
+                }
+            })
+            .catch(err => {
+                playBtn.innerText = "[ERROR]";
+                console.error("API Fetch Error: ", err);
+            });
     }
 
     function togglePlayback() {
+        if (playBtn.innerText === "[LOADING]") return; // Block input while fetching stream
+
         if (audioElement.paused) {
-            playBtn.innerText = "[LOADING]";
             audioElement.play()
                 .then(() => {
                     playBtn.innerText = "[PAUSE]";
                 })
                 .catch(err => {
                     playBtn.innerText = "[ERROR]";
-                    console.error("Audio block encountered:", err);
+                    console.error("Playback block encountered:", err);
                 });
         } else {
             audioElement.pause();
