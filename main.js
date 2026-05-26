@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-    console.log("Quran OS Touch Engine Online");
+    console.log("Quran OS Active Core Online");
 
     const items = document.querySelectorAll('.menu-item');
     let activeIndex = 0;
@@ -12,28 +12,25 @@ window.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const audioElement = document.getElementById('audio-element');
 
-// Universal core stream switcher function
-function loadAndSetupAudio(element) {
-    const surahName = element.innerText;
-    const surahId = element.getAttribute('data-id'); // This is "001", "002", etc.
-    
-    // Convert "001" to standard numbers like "1", "2" or "114" to match this server's structure
-    const cleanId = parseInt(surahId, 10);
-    
-    // Global high-speed, CORS-friendly Quran CDN path
-    const audioUrl = `https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshawi/murattal/${cleanId}.mp3`;
-    
-    currentViewState = "player";
-    menuView.classList.add('hidden');
-    playerView.classList.remove('hidden');
-    
-    playingTitle.innerText = surahName;
-    playBtn.innerText = "[PLAY]"; 
-    
-    audioElement.src = audioUrl;
-    audioElement.load();
-}
-    // Toggle play state function
+    // Setup streaming connection using direct EveryQuran API mirror system
+    function loadAndSetupAudio(element) {
+        const surahName = element.innerText;
+        const surahId = element.getAttribute('data-id');
+        
+        // Formats to clear standard server cross-origin restrictions completely
+        const audioUrl = `https://everyquran.com/recitations/Al-Minshawi/${surahId}.mp3`;
+        
+        currentViewState = "player";
+        menuView.classList.add('hidden');
+        playerView.classList.remove('hidden');
+        
+        playingTitle.innerText = surahName;
+        playBtn.innerText = "[PLAY]"; 
+        
+        audioElement.src = audioUrl;
+        audioElement.load();
+    }
+
     function togglePlayback() {
         if (audioElement.paused) {
             playBtn.innerText = "[LOADING]";
@@ -43,7 +40,7 @@ function loadAndSetupAudio(element) {
                 })
                 .catch(err => {
                     playBtn.innerText = "[ERROR]";
-                    console.error("Audio blocked:", err);
+                    console.error("Audio block encountered:", err);
                 });
         } else {
             audioElement.pause();
@@ -51,7 +48,6 @@ function loadAndSetupAudio(element) {
         }
     }
 
-    // Return to main playlist layout
     function backToMenu() {
         currentViewState = "menu";
         playerView.classList.add('hidden');
@@ -64,7 +60,7 @@ function loadAndSetupAudio(element) {
         items[activeIndex].scrollIntoView({ block: 'nearest' });
     }
 
-    // --- MOBILE TOUCH EVENTS ---
+    // --- TOUCH SCREEN CLICK CONTROLS ---
     items.forEach((item, index) => {
         item.addEventListener('click', () => {
             items[activeIndex].classList.remove('selected');
@@ -84,7 +80,7 @@ function loadAndSetupAudio(element) {
         backToMenu();
     });
 
-    // --- DESKTOP KEYBOARD ENGINE ---
+    // --- HARDWARE KEYBOARD CONTROLS ---
     window.addEventListener('keydown', (event) => {
         if (currentViewState === "menu") {
             if (event.key === 'ArrowDown') {
