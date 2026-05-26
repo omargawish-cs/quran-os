@@ -12,23 +12,27 @@ window.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const audioElement = document.getElementById('audio-element');
 
-    // Universal core stream switcher function
-    function loadAndSetupAudio(element) {
-        const surahName = element.innerText;
-        const surahId = element.getAttribute('data-id');
-        const audioUrl = `https://server11.mp3quran.net/minsh/${surahId}.mp3`;
-        
-        currentViewState = "player";
-        menuView.classList.add('hidden');
-        playerView.classList.remove('hidden');
-        
-        playingTitle.innerText = surahName;
-        playBtn.innerText = "[PLAY]"; 
-        
-        audioElement.src = audioUrl;
-        audioElement.load();
-    }
-
+// Universal core stream switcher function
+function loadAndSetupAudio(element) {
+    const surahName = element.innerText;
+    const surahId = element.getAttribute('data-id'); // This is "001", "002", etc.
+    
+    // Convert "001" to standard numbers like "1", "2" or "114" to match this server's structure
+    const cleanId = parseInt(surahId, 10);
+    
+    // Global high-speed, CORS-friendly Quran CDN path
+    const audioUrl = `https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshawi/murattal/${cleanId}.mp3`;
+    
+    currentViewState = "player";
+    menuView.classList.add('hidden');
+    playerView.classList.remove('hidden');
+    
+    playingTitle.innerText = surahName;
+    playBtn.innerText = "[PLAY]"; 
+    
+    audioElement.src = audioUrl;
+    audioElement.load();
+}
     // Toggle play state function
     function togglePlayback() {
         if (audioElement.paused) {
