@@ -21,7 +21,7 @@ function loadAndSetupAudio(element) {
     const cleanId = parseInt(surahId, 10);
     
     // Global high-speed, CORS-friendly Quran CDN path
-    const audioUrl = `https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshawi/murattal/${cleanId}.mp3`;
+const audioUrl = `https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshawi/murattal/${cleanId}.mp3`;
     
     currentViewState = "player";
     menuView.classList.add('hidden');
