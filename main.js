@@ -12,10 +12,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const audioElement = document.getElementById('audio-element');
 
-    // CORS-Bypassing API Handler
+    // Official open network resource handler for Sheikh Al-Minshawi
     function loadAndSetupAudio(element) {
         const surahName = element.innerText;
-        const surahId = element.getAttribute('data-id'); // E.g., "001", "003"
+        const surahId = element.getAttribute('data-id'); // E.g., "001", "002"
         const cleanId = parseInt(surahId, 10);
         
         currentViewState = "player";
@@ -25,13 +25,12 @@ window.addEventListener('DOMContentLoaded', () => {
         playingTitle.innerText = surahName;
         playBtn.innerText = "[LOADING]"; 
 
-        // Fetching the official open-source audio streaming link directly from Quran.com API
-        // Reciter ID 7 is Sheikh Minshawi (Murattal)
-        const apiUrl = `https://api.quran.com/api/v4/chapter_recitations/7/${cleanId}`;
+        // Target ID 104 links explicitly to Sheikh Mohamed Siddiq al-Minshawi (Murattal)
+        const apiUrl = `https://api.quran.com/api/v4/chapter_recitations/104/${cleanId}`;
 
         fetch(apiUrl)
             .then(response => {
-                if (!response.ok) throw new Error("API Network issue");
+                if (!response.ok) throw new Error("API Server response failed");
                 return response.json();
             })
             .then(data => {
@@ -40,17 +39,17 @@ window.addEventListener('DOMContentLoaded', () => {
                     audioElement.load();
                     playBtn.innerText = "[PLAY]";
                 } else {
-                    throw new Error("Invalid API data format");
+                    throw new Error("Invalid format structure");
                 }
             })
             .catch(err => {
                 playBtn.innerText = "[ERROR]";
-                console.error("API Fetch Error: ", err);
+                console.error("Connection Failed: ", err);
             });
     }
 
     function togglePlayback() {
-        if (playBtn.innerText === "[LOADING]") return; // Block input while fetching stream
+        if (playBtn.innerText === "[LOADING]") return; 
 
         if (audioElement.paused) {
             audioElement.play()
