@@ -12,27 +12,27 @@ window.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const audioElement = document.getElementById('audio-element');
 
-// Universal core stream switcher function
-function loadAndSetupAudio(element) {
-    const surahName = element.innerText;
-    const surahId = element.getAttribute('data-id'); // This is "001", "002", etc.
-    
-    // Convert "001" to standard numbers like "1", "2" or "114" to match this server's structure
-    const cleanId = parseInt(surahId, 10);
-    
-    // Global high-speed, CORS-friendly Quran CDN path
-    const audioUrl = `https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshawi/murattal/${cleanId}.mp3`;
-    
-    currentViewState = "player";
-    menuView.classList.add('hidden');
-    playerView.classList.remove('hidden');
-    
-    playingTitle.innerText = surahName;
-    playBtn.innerText = "[PLAY]"; 
-    
-    audioElement.src = audioUrl;
-    audioElement.load();
-}
+    // Universal core stream switcher function
+    function loadAndSetupAudio(element) {
+        const surahName = element.innerText;
+        const surahId = element.getAttribute('data-id'); // Keeps "001", "002", etc.
+        
+        // Secure, CORS-friendly CDN path that requires 3 digits (e.g. 001.mp3)
+        const audioUrl = `https://download.quran.com/minshawi_murattal/${surahId}.mp3`;
+        
+        currentViewState = "player";
+        menuView.classList.add('hidden');
+        playerView.classList.remove('hidden');
+        
+        playingTitle.innerText = surahName;
+        playBtn.innerText = "[PLAY]"; 
+        
+        // Clear old state and configure cross-origin settings
+        audioElement.crossOrigin = "anonymous";
+        audioElement.src = audioUrl;
+        audioElement.load();
+    }
+
     // Toggle play state function
     function togglePlayback() {
         if (audioElement.paused) {
@@ -48,8 +48,8 @@ function loadAndSetupAudio(element) {
         } else {
             audioElement.pause();
             playBtn.innerText = "[PLAY]";
-        }a
-    }
+        }
+    } // Fixed the trailing 'a' typo right here
 
     // Return to main playlist layout
     function backToMenu() {
