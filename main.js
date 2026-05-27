@@ -13,25 +13,32 @@ window.addEventListener('DOMContentLoaded', () => {
     const audioElement = document.getElementById('audio-element');
 
     // Universal core stream switcher function
-    function loadAndSetupAudio(element) {
-        const surahName = element.innerText;
-        const surahId = element.getAttribute('data-id'); // Keeps "001", "002", etc.
-        
-        // Secure, CORS-friendly CDN path that requires 3 digits (e.g. 001.mp3)
-        const audioUrl = `https://download.quran.com/minshawi_murattal/${surahId}.mp3`;
-        
-        currentViewState = "player";
-        menuView.classList.add('hidden');
-        playerView.classList.remove('hidden');
-        
-        playingTitle.innerText = surahName;
-        playBtn.innerText = "[PLAY]"; 
-        
-        // Clear old state and configure cross-origin settings
-        audioElement.crossOrigin = "anonymous";
-        audioElement.src = audioUrl;
-        audioElement.load();
-    }
+// Universal core stream switcher function
+function loadAndSetupAudio(element) {
+    const surahName = element.innerText;
+    const surahId = element.getAttribute('data-id'); // This is "001", "002", etc.
+    
+    // Convert "001" into standard number digits like "1", "2", "114" to index the files correctly
+    const cleanId = parseInt(surahId, 10);
+    
+    // Pad the single digits to match the file indexing layout of this secure server (e.g., 001, 014, 114)
+    const paddedId = String(cleanId).padStart(3, '0');
+    
+    // Global, ultra high-speed, secure, open CORS network server for Al-Minshawi (Murattal)
+    const audioUrl = `https://server10.mp3quran.net/minsh/${paddedId}.mp3`;
+    
+    currentViewState = "player";
+    menuView.classList.add('hidden');
+    playerView.classList.remove('hidden');
+    
+    playingTitle.innerText = surahName;
+    playBtn.innerText = "[PLAY]"; 
+    
+    // Clear old state configurations and issue structural cross-origin commands to the window engine
+    audioElement.removeAttribute('crossOrigin'); 
+    audioElement.src = audioUrl;
+    audioElement.load();
+}
 
     // Toggle play state function
     function togglePlayback() {
