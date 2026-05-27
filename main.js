@@ -13,16 +13,13 @@ window.addEventListener('DOMContentLoaded', () => {
     const audioElement = document.getElementById('audio-element');
 
 // Universal core stream switcher function
+// Universal core stream switcher function
 function loadAndSetupAudio(element) {
     const surahName = element.innerText;
-    const surahId = element.getAttribute('data-id'); // This is "001", "002", etc.
+    const surahId = element.getAttribute('data-id'); // Keeps the 3-digit string ("001", "002")
     
-    // Convert "001" to standard numbers like "1", "2" or "114" to match this server's structure
-    const cleanId = parseInt(surahId, 10);
-    
-    // Global high-speed, CORS-friendly Quran CDN path
-// Switch to Al-Minshawi's Mujawwad style
-const audioUrl = `https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshawi/mujawwad/${cleanId}.mp3`;
+    // Stable, high-speed, fully SSL-secured, CORS-friendly official storage path
+    const audioUrl = `https://download.quran.com/minshawi_murattal/${surahId}.mp3`;
     
     currentViewState = "player";
     menuView.classList.add('hidden');
@@ -31,6 +28,8 @@ const audioUrl = `https://download.quranicaudio.com/quran/muhammad_siddeeq_al-mi
     playingTitle.innerText = surahName;
     playBtn.innerText = "[PLAY]"; 
     
+    // Pass explicit instructions to the browser interface to allow cross-origin stream media
+    audioElement.crossOrigin = "anonymous";
     audioElement.src = audioUrl;
     audioElement.load();
 }
