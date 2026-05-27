@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', () => {
         playBtn.innerText = "[LOADING]"; 
 
         // Direct archive path for Minshawi Murattal
-const directAudioUrl = `https://server7.mp3quran.net/basit/${surahId}.mp3`;
+const directAudioUrl = `https://server11.mp3quran.net/naenah/${surahId}.mp3`;
         
         // We route it through an open proxy to completely bypass browser CORS blocks
         const proxiedUrl = `https://corsproxy.io/?${encodeURIComponent(directAudioUrl)}`;
