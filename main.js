@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-    console.log("Quran OS Active Core Online");
+    console.log("Quran OS Touch Engine Online");
 
     const items = document.querySelectorAll('.menu-item');
     let activeIndex = 0;
@@ -12,54 +12,38 @@ window.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const audioElement = document.getElementById('audio-element');
 
-    // CORS-Bypassing API Handler
-    function loadAndSetupAudio(element) {
-        const surahName = element.innerText;
-        const surahId = element.getAttribute('data-id'); // E.g., "001", "003"
-        const cleanId = parseInt(surahId, 10);
-        
-        currentViewState = "player";
-        menuView.classList.add('hidden');
-        playerView.classList.remove('hidden');
-        
-        playingTitle.innerText = surahName;
-        playBtn.innerText = "[LOADING]"; 
-
-        // Fetching the official open-source audio streaming link directly from Quran.com API
-        // Reciter ID 7 is Sheikh Minshawi (Murattal)
-        const apiUrl = `https://api.quran.com/api/v4/chapter_recitations/7/${cleanId}`;
-
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) throw new Error("API Network issue");
-                return response.json();
-            })
-            .then(data => {
-                if (data && data.audio_file && data.audio_file.audio_url) {
-                    audioElement.src = data.audio_file.audio_url;
-                    audioElement.load();
-                    playBtn.innerText = "[PLAY]";
-                } else {
-                    throw new Error("Invalid API data format");
-                }
-            })
-            .catch(err => {
-                playBtn.innerText = "[ERROR]";
-                console.error("API Fetch Error: ", err);
-            });
-    }
-
+// Universal core stream switcher function
+function loadAndSetupAudio(element) {
+    const surahName = element.innerText;
+    const surahId = element.getAttribute('data-id'); // This is "001", "002", etc.
+    
+    // Convert "001" to standard numbers like "1", "2" or "114" to match this server's structure
+    const cleanId = parseInt(surahId, 10);
+    
+    // Global high-speed, CORS-friendly Quran CDN path
+    const audioUrl = `https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshawi/murattal/${cleanId}.mp3`;
+    
+    currentViewState = "player";
+    menuView.classList.add('hidden');
+    playerView.classList.remove('hidden');
+    
+    playingTitle.innerText = surahName;
+    playBtn.innerText = "[PLAY]"; 
+    
+    audioElement.src = audioUrl;
+    audioElement.load();
+}
+    // Toggle play state function
     function togglePlayback() {
-        if (playBtn.innerText === "[LOADING]") return; // Block input while fetching stream
-
         if (audioElement.paused) {
+            playBtn.innerText = "[LOADING]";
             audioElement.play()
                 .then(() => {
                     playBtn.innerText = "[PAUSE]";
                 })
                 .catch(err => {
                     playBtn.innerText = "[ERROR]";
-                    console.error("Playback block encountered:", err);
+                    console.error("Audio blocked:", err);
                 });
         } else {
             audioElement.pause();
@@ -67,6 +51,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Return to main playlist layout
     function backToMenu() {
         currentViewState = "menu";
         playerView.classList.add('hidden');
@@ -79,7 +64,7 @@ window.addEventListener('DOMContentLoaded', () => {
         items[activeIndex].scrollIntoView({ block: 'nearest' });
     }
 
-    // --- TOUCH SCREEN CLICK CONTROLS ---
+    // --- MOBILE TOUCH EVENTS ---
     items.forEach((item, index) => {
         item.addEventListener('click', () => {
             items[activeIndex].classList.remove('selected');
@@ -99,7 +84,7 @@ window.addEventListener('DOMContentLoaded', () => {
         backToMenu();
     });
 
-    // --- HARDWARE KEYBOARD CONTROLS ---
+    // --- DESKTOP KEYBOARD ENGINE ---
     window.addEventListener('keydown', (event) => {
         if (currentViewState === "menu") {
             if (event.key === 'ArrowDown') {
