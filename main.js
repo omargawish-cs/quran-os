@@ -12,11 +12,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const audioElement = document.getElementById('audio-element');
 
-    // Natively Open API Fetch Engine
+    // Native Media Stream Handler
     function loadAndSetupAudio(element) {
         const surahName = element.innerText;
         const surahId = element.getAttribute('data-id'); // E.g., "001", "002"
-        const cleanId = parseInt(surahId, 10);
         
         currentViewState = "player";
         menuView.classList.add('hidden');
@@ -25,27 +24,25 @@ window.addEventListener('DOMContentLoaded', () => {
         playingTitle.innerText = surahName;
         playBtn.innerText = "[LOADING]"; 
 
-        // Recitation ID 11 links directly to Sheikh Ahmed Naina (Murattal style) on Quran.com
-        const apiUrl = `https://api.quran.com/api/v4/chapter_recitations/11/${cleanId}`;
+        // Open cloud CDN specifically for Sheikh Ahmed Naina (Murattal)
+        // This structural link bypasses modern browser security shields natively.
+        const audioUrl = `https://quranicaudio.com/download/quran/80/${surahId}.mp3`;
+        
+        audioElement.src = audioUrl;
+        audioElement.load();
+        
+        // Listen for browser ready state before clearing the button status
+        audioElement.oncanplaythrough = () => {
+            if (playBtn.innerText === "[LOADING]") {
+                playBtn.innerText = "[PLAY]";
+            }
+        };
 
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) throw new Error("API Server Connection Failed");
-                return response.json();
-            })
-            .then(data => {
-                if (data && data.audio_file && data.audio_file.audio_url) {
-                    audioElement.src = data.audio_file.audio_url;
-                    audioElement.load();
-                    playBtn.innerText = "[PLAY]";
-                } else {
-                    throw new Error("Invalid API Data Format");
-                }
-            })
-            .catch(err => {
-                playBtn.innerText = "[ERROR]";
-                console.error("API Error encountered:", err);
-            });
+        // Fallback error event logger to diagnose device environment blocks
+        audioElement.onerror = () => {
+            playBtn.innerText = "[ERROR]";
+            console.error("Audio failed to resolve at source node:", audioUrl);
+        };
     }
 
     function togglePlayback() {
