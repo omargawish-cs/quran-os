@@ -12,11 +12,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const audioElement = document.getElementById('audio-element');
 
-    // Official open network resource handler for Sheikh Al-Minshawi
+    // Proxy-backed streaming for Sheikh Al-Minshawi
     function loadAndSetupAudio(element) {
         const surahName = element.innerText;
         const surahId = element.getAttribute('data-id'); // E.g., "001", "002"
-        const cleanId = parseInt(surahId, 10);
         
         currentViewState = "player";
         menuView.classList.add('hidden');
@@ -25,27 +24,15 @@ window.addEventListener('DOMContentLoaded', () => {
         playingTitle.innerText = surahName;
         playBtn.innerText = "[LOADING]"; 
 
-        // Target ID 104 links explicitly to Sheikh Mohamed Siddiq al-Minshawi (Murattal)
-        const apiUrl = `https://api.quran.com/api/v4/chapter_recitations/104/${cleanId}`;
-
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) throw new Error("API Server response failed");
-                return response.json();
-            })
-            .then(data => {
-                if (data && data.audio_file && data.audio_file.audio_url) {
-                    audioElement.src = data.audio_file.audio_url;
-                    audioElement.load();
-                    playBtn.innerText = "[PLAY]";
-                } else {
-                    throw new Error("Invalid format structure");
-                }
-            })
-            .catch(err => {
-                playBtn.innerText = "[ERROR]";
-                console.error("Connection Failed: ", err);
-            });
+        // Direct archive path for Minshawi Murattal
+        const directAudioUrl = `https://server11.mp3quran.net/minsh/${surahId}.mp3`;
+        
+        // We route it through an open proxy to completely bypass browser CORS blocks
+        const proxiedUrl = `https://corsproxy.io/?${encodeURIComponent(directAudioUrl)}`;
+        
+        audioElement.src = proxiedUrl;
+        audioElement.load();
+        playBtn.innerText = "[PLAY]";
     }
 
     function togglePlayback() {
