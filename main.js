@@ -13,9 +13,13 @@ window.addEventListener('DOMContentLoaded', () => {
     const audioElement = document.getElementById('audio-element');
 
     // Proxy-backed streaming for Sheikh Al-Minshawi
+// Direct open-network streaming for Sheikh Ahmed Naina
     function loadAndSetupAudio(element) {
         const surahName = element.innerText;
         const surahId = element.getAttribute('data-id'); // E.g., "001", "002"
+        
+        // Convert "001" to a standard number format (like 1, 2, 114) for this server
+        const cleanId = parseInt(surahId, 10);
         
         currentViewState = "player";
         menuView.classList.add('hidden');
@@ -24,13 +28,10 @@ window.addEventListener('DOMContentLoaded', () => {
         playingTitle.innerText = surahName;
         playBtn.innerText = "[LOADING]"; 
 
-        // Direct archive path for Minshawi Murattal
-const directAudioUrl = `https://server11.mp3quran.net/naenah/${surahId}.mp3`;
+        // High-speed open CDN containing the exact recordings of Ahmed Naina (Murattal)
+        const audioUrl = `https://download.quranicaudio.com/quran/ahmed_nu3ayna3/${cleanId}.mp3`;
         
-        // We route it through an open proxy to completely bypass browser CORS blocks
-        const proxiedUrl = `https://corsproxy.io/?${encodeURIComponent(directAudioUrl)}`;
-        
-        audioElement.src = proxiedUrl;
+        audioElement.src = audioUrl;
         audioElement.load();
         playBtn.innerText = "[PLAY]";
     }
