@@ -29,7 +29,8 @@ window.addEventListener('DOMContentLoaded', () => {
         playBtn.innerText = "[LOADING]"; 
 
         // High-speed open CDN containing the exact recordings of Ahmed Naina (Murattal)
-const audioUrl = `https://download.quranicaudio.com/quran/ahmed_nu3ayna3/${cleanId}.mp3`;
+// A robust alternate CDN link format that bypasses strict browser shield policies
+const audioUrl = `https://quranicaudio.com/download/quran/80/${surahId}.mp3`;
         
         audioElement.src = audioUrl;
         audioElement.load();
