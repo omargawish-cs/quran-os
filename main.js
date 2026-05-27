@@ -12,13 +12,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const backBtn = document.getElementById('back-btn');
     const audioElement = document.getElementById('audio-element');
 
-    // Proxy-backed streaming for Sheikh Al-Minshawi
-// Direct open-network streaming for Sheikh Ahmed Naina
+    // Natively Open API Fetch Engine
     function loadAndSetupAudio(element) {
         const surahName = element.innerText;
         const surahId = element.getAttribute('data-id'); // E.g., "001", "002"
-        
-        // Convert "001" to a standard number format (like 1, 2, 114) for this server
         const cleanId = parseInt(surahId, 10);
         
         currentViewState = "player";
@@ -28,13 +25,27 @@ window.addEventListener('DOMContentLoaded', () => {
         playingTitle.innerText = surahName;
         playBtn.innerText = "[LOADING]"; 
 
-        // High-speed open CDN containing the exact recordings of Ahmed Naina (Murattal)
-// A robust alternate CDN link format that bypasses strict browser shield policies
-const audioUrl = `https://quranicaudio.com/download/quran/80/${surahId}.mp3`;
-        
-        audioElement.src = audioUrl;
-        audioElement.load();
-        playBtn.innerText = "[PLAY]";
+        // Recitation ID 11 links directly to Sheikh Ahmed Naina (Murattal style) on Quran.com
+        const apiUrl = `https://api.quran.com/api/v4/chapter_recitations/11/${cleanId}`;
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) throw new Error("API Server Connection Failed");
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.audio_file && data.audio_file.audio_url) {
+                    audioElement.src = data.audio_file.audio_url;
+                    audioElement.load();
+                    playBtn.innerText = "[PLAY]";
+                } else {
+                    throw new Error("Invalid API Data Format");
+                }
+            })
+            .catch(err => {
+                playBtn.innerText = "[ERROR]";
+                console.error("API Error encountered:", err);
+            });
     }
 
     function togglePlayback() {
